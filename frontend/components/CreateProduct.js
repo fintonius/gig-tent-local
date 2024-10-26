@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
+import { ALL_PRODUCTS_QUERY } from './Products';
 import DisplayError from './ErrorMessage';
 
 // this is what is adding the new product to the site using Keystone to
@@ -50,6 +51,7 @@ export default function CreateProduct() {
       // this is passing all the values listed in 'inputs' from the
       // destructuring above to the MUTATION we have created
       variables: inputs,
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     }
   );
 
