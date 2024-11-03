@@ -59,11 +59,11 @@ export default function UpdateProduct({ id }) {
 
   // solves issue of product data not appearing on initial page load for the
   // update product page
-  useEffect(() => {
-    if (data?.Product) {
-      resetForm(data.Product);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data?.Product) {
+  //     resetForm(data.Product);
+  //   }
+  // }, [data]);
 
   if (loading) return <p>Loading... </p>;
   // 3: We need the form to handle the updates
