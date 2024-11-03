@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import { useEffect } from 'react';
 import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
 import useForm from '../lib/useForm';
@@ -34,7 +35,7 @@ const UPDATE_PRODUCT_MUTATION = gql`
   }
 `;
 
-// destructuring variable 'id' from props.id that is being sent via
+// destructuring variable 'id' from props.id that is being sent
 // via props in update.js when it invokes this component
 export default function UpdateProduct({ id }) {
   // 1: We need to get the existing product
@@ -55,6 +56,15 @@ export default function UpdateProduct({ id }) {
   // using destructuring to 'inputs' & 'handleChange'
   // from the useForm custom hook
   const { inputs, handleChange, clearForm, resetForm } = useForm(data?.Product);
+
+  // solves issue of product data not appearing on initial page load for the
+  // update product page
+  useEffect(() => {
+    if (data?.Product) {
+      resetForm(data.Product);
+    }
+  }, [data]);
+
   if (loading) return <p>Loading... </p>;
   // 3: We need the form to handle the updates
   return (
@@ -99,7 +109,7 @@ export default function UpdateProduct({ id }) {
             id="name"
             name="name"
             placeholder="Name"
-            value={inputs.name}
+            value={inputs.name || ''}
             onChange={handleChange}
           />
         </label>
@@ -110,7 +120,7 @@ export default function UpdateProduct({ id }) {
             id="price"
             name="price"
             placeholder="Price"
-            value={inputs.price}
+            value={inputs.price || ''}
             onChange={handleChange}
           />
         </label>
@@ -120,7 +130,7 @@ export default function UpdateProduct({ id }) {
             id="description"
             name="description"
             placeholder="description"
-            value={inputs.description}
+            value={inputs.description || ''}
             onChange={handleChange}
           />
         </label>
